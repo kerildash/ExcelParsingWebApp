@@ -1,12 +1,18 @@
+using ExcelParsingWebApp.Services;
+
 namespace ExcelParsingWebApp
 {
 	public class Program
 	{
 		public static void Main(string[] args)
 		{
-			var builder = WebApplication.CreateBuilder(args);
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
-			// Add services to the container.
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Add services to the container.
+            builder.Services.AddScoped<IWorksheetReader, WorksheetReader>();
+            builder.Services.AddScoped<IFileService, FileService>();
 			builder.Services.AddControllersWithViews();
 
 			var app = builder.Build();
