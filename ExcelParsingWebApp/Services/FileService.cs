@@ -1,4 +1,4 @@
-﻿using ExcelParsingWebApp.Models;
+﻿using ExcelParsingWebApp.Models.ViewModels;
 using System.Text.RegularExpressions;
 
 namespace ExcelParsingWebApp.Services;

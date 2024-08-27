@@ -1,4 +1,4 @@
-﻿using ExcelParsingWebApp.Models;
+﻿using ExcelParsingWebApp.Models.ViewModels;
 
 namespace ExcelParsingWebApp.Services;
 

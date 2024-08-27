@@ -1,11 +1,11 @@
-﻿using ExcelParsingWebApp.Models;
-using ExcelParsingWebApp.Models.Domain;
+﻿using ExcelParsingWebApp.Models.Domain;
+using ExcelParsingWebApp.Models.ViewModels;
 using ExcelParsingWebApp.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExcelParsingWebApp.Controllers
 {
-	public class FileUploadController(
+    public class FileUploadController(
 		IFileService fileService,
 		IWorksheetReader worksheetReader
 		) : Controller
@@ -29,6 +29,25 @@ namespace ExcelParsingWebApp.Controllers
 
                 await worksheetReader.CreateAsync(filePath);
 				Sheet sheet = await worksheetReader.ReadHeaderAsync();
+				//push sheet to db
+				Class c;
+				Account? account;
+				while (worksheetReader.GoNextRaw())
+				{
+					if (worksheetReader.CheckContentType()== Models.ContentType.Class)
+					{
+						c = worksheetReader.ReadClass();
+						//push to db
+					}
+					if (worksheetReader.CheckContentType() == Models.ContentType.Account)
+					{
+						account = worksheetReader.ReadAccount();
+						if (account != null)
+						{
+							//push to db
+						}
+					}
+				}
                 worksheetReader.Close();
                 return Ok($"File uploaded successfully: {model.File.FileName}, {await worksheetReader.GetWorksheetNameAsync()}");
 				
