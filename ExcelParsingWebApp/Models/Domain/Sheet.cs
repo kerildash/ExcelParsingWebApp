@@ -3,7 +3,6 @@
 public record Sheet
 {
 	public required Guid Id { get; init; }
-	public required string SheetName { get; init; }
 	public required string SheetTitle { get; init; }
 	public required string BankName { get; init; }
 	public required string PeriodInfo { get; init; }

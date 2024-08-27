@@ -2,7 +2,6 @@
 using ExcelParsingWebApp.Models.Domain;
 using ExcelParsingWebApp.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.PortableExecutable;
 
 namespace ExcelParsingWebApp.Controllers
 {
@@ -27,8 +26,8 @@ namespace ExcelParsingWebApp.Controllers
             if (model.File != null && model.File.Length > 0)
             {
 				string filePath = await fileService.CreateAsync(model);
-                await worksheetReader.CreateAsync(filePath);
 
+                await worksheetReader.CreateAsync(filePath);
 				Sheet sheet = await worksheetReader.ReadHeaderAsync();
                 return Ok($"File uploaded successfully: {model.File.FileName}, {await worksheetReader.GetWorksheetNameAsync()}");
             }
