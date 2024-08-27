@@ -45,7 +45,7 @@ public class WorksheetReader : IWorksheetReader
             Currency = currency
         };
     }
-    ~WorksheetReader()
+    public void Close()
     {
         Reader.Close();
     }

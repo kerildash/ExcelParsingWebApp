@@ -29,8 +29,10 @@ namespace ExcelParsingWebApp.Controllers
 
                 await worksheetReader.CreateAsync(filePath);
 				Sheet sheet = await worksheetReader.ReadHeaderAsync();
+                worksheetReader.Close();
                 return Ok($"File uploaded successfully: {model.File.FileName}, {await worksheetReader.GetWorksheetNameAsync()}");
-            }
+				
+			}
 
             return BadRequest("No file selected.");
         }
