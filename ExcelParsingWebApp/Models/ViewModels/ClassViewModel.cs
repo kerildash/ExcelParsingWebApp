@@ -8,6 +8,6 @@ public record ClassViewModel
 	public required Guid SheetId { get; init; }
 	public required string ClassName { get; init; }
 
-	public virtual ICollection<AccountViewModel>? Accounts { get; set; }
+	public virtual List<AccountViewModel>? Accounts { get; set; }
 	public virtual SheetViewModel? Sheet { get; set; }
 }

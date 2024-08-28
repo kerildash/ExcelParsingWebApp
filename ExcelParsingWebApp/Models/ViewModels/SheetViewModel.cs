@@ -12,6 +12,6 @@ public record SheetViewModel
 	public required DateTime Date { get; init; }
 	public required string Currency { get; init; }
 
-	public virtual ICollection<ClassViewModel>? Classes { get; set; }
+	public virtual List<ClassViewModel>? Classes { get; set; }
 
 }

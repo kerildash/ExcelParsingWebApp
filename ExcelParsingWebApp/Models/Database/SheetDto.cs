@@ -10,6 +10,6 @@ public record SheetDto
 	public required DateTime Date { get; init; }
 	public required string Currency { get; init; }
 
-	public virtual ICollection<ClassDto>? Classes { get; set; }
+	public virtual List<ClassDto>? Classes { get; set; }
 
 }
