@@ -29,6 +29,10 @@ namespace ExcelParsingWebApp.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Upload(UploadViewModel model)
 		{
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             if (model.File != null && model.File.Length > 0)
             {
 				string filePath = await fileService.CreateAsync(model);

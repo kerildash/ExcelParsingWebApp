@@ -1,17 +1,25 @@
 ﻿@using ExcelParsingWebApp.Models.ViewModels;
 @model UploadViewModel
 @{
-    ViewData["Title"] = "Upload a file";
+    ViewData["Title"] = "Загрузка файла";
 }
 
-
-<h2>File Upload</h2>
-
-<form method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label asp-for="File"></label>
-        <input asp-for="File" type="file" class="form-control">
-        <span asp-validation-for="File" class="text-danger"></span>
+<div class="friends-container">
+    <div class="header-flex-container">
+        <h1 class="header-in-flex">Загрузка ведомости</h1>
+        <button title="К списку ведомостей" class="in-header-btn" onclick="location.href='@Url.Action("Index", "Sheet")'">
+            <i class="header-icon fi fi-bs-cross"></i>
+        </button>
     </div>
-    <button type="submit" class="btn btn-primary">Upload</button>
-</form>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="border friend-div flex-container">
+            <div class="form-group">
+                <label asp-for="File">Выберите файл</label>
+                <input asp-for="File" type="file" class="form-control">
+                <span asp-validation-for="File" class="text-danger"></span>
+                <p style="margin: 15px 0 0 0"><input class="btn border add-friend" type="submit" value="Загрузить" /></p>
+            </div>
+        </div>
+    </form>
+</div>
