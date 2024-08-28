@@ -19,7 +19,7 @@ namespace ExcelParsingWebApp
             builder.Services.AddScoped<IWorksheetReader, WorksheetReader>();
             builder.Services.AddScoped<IFileService, FileService>();
 			builder.Services.AddScoped<RowCalculatingService>();
-
+			builder.Services.AddScoped<ExcelToSqlService>();
 			builder.Services.AddScoped<AccountRepository>();
             builder.Services.AddScoped<ClassRepository>();
             builder.Services.AddScoped<SheetRepository>();
