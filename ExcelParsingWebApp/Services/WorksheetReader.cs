@@ -46,6 +46,8 @@ public class WorksheetReader : IWorksheetReader
     }
     public ContentType CheckContentType()
     {
+        if (Reader.GetValue(0) is null)
+            return ContentType.Empty;
         if (Reader.GetValue(1) is null)
             return ContentType.Class;
         return ContentType.Account;

@@ -7,6 +7,5 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 {
     public DbSet<AccountDto> Accounts { get; set; }
     public DbSet<ClassDto> Classes { get; set; }
-    public DbSet<Sheet> Sheets { get; set; }
-
+    public DbSet<SheetDto> Sheets { get; set; }
 }
