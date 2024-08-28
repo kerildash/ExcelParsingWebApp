@@ -3,6 +3,7 @@ using ExcelParsingWebApp.Database.Repositories;
 using ExcelParsingWebApp.Models.Domain;
 using ExcelParsingWebApp.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace ExcelParsingWebApp
 {
@@ -21,7 +22,7 @@ namespace ExcelParsingWebApp
             builder.Services.AddScoped<AccountRepository>();
             builder.Services.AddScoped<ClassRepository>();
             builder.Services.AddScoped<SheetRepository>();
-
+			builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 			builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
                 builder.Configuration.GetConnectionString("DefaultConnection")));
 
