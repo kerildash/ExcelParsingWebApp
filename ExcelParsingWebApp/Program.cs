@@ -23,8 +23,9 @@ namespace ExcelParsingWebApp
             builder.Services.AddScoped<ClassRepository>();
             builder.Services.AddScoped<SheetRepository>();
 			builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
-			builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
-                builder.Configuration.GetConnectionString("DefaultConnection")));
+			builder.Services.AddDbContext<AppDbContext>(options => options
+				.UseLazyLoadingProxies()
+                .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddControllersWithViews();
 

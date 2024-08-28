@@ -1,13 +1,13 @@
-﻿using ExcelParsingWebApp.Models.Domain;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace ExcelParsingWebApp.Models.Database;
-
+[Index(nameof(ClassName))]
 public record ClassDto
 {
 	public required Guid Id { get; init; }
-    public required Guid SheetId { get; init; }
-    public required string ClassName { get; init; }
+	public required Guid SheetId { get; init; }
+	public required string ClassName { get; init; }
 
-    public ICollection<AccountDto>? Accounts { get; set; }
-    public SheetDto? Sheet { get; set; }
+	public virtual ICollection<AccountDto>? Accounts { get; set; }
+	public virtual SheetDto? Sheet { get; set; }
 }
