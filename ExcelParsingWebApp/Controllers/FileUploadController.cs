@@ -1,13 +1,19 @@
-﻿using ExcelParsingWebApp.Models.Domain;
+﻿using ExcelParsingWebApp.Database.Repositories;
+using ExcelParsingWebApp.Models.Domain;
 using ExcelParsingWebApp.Models.ViewModels;
+using ExcelParsingWebApp.Models.Database;
 using ExcelParsingWebApp.Services;
 using Microsoft.AspNetCore.Mvc;
+using ExcelParsingWebApp.Models;
 
 namespace ExcelParsingWebApp.Controllers
 {
     public class FileUploadController(
 		IFileService fileService,
-		IWorksheetReader worksheetReader
+		IWorksheetReader worksheetReader,
+		SheetRepository sheetRepo,
+		ClassRepository classRepo,
+		AccountRepository accountRepo
 		) : Controller
 	{
 		[HttpGet]
@@ -29,24 +35,59 @@ namespace ExcelParsingWebApp.Controllers
 
                 await worksheetReader.CreateAsync(filePath);
 				Sheet sheet = await worksheetReader.ReadHeaderAsync();
-				//push sheet to db
-				Class c;
+
+				await sheetRepo.CreateAsync(
+					new SheetDto
+					{
+						Id = sheet.Id,
+						SheetTitle = sheet.SheetTitle,
+						BankName = sheet.BankName,
+						PeriodInfo = sheet.PeriodInfo,
+						AdditionalInfo = sheet.AdditionalInfo,
+						Date = sheet.Date,
+						Currency = sheet.Currency
+					});
+
+				Class? c = null;
 				Account? account;
 				while (worksheetReader.GoNextRaw())
 				{
-					if (worksheetReader.CheckContentType()== Models.ContentType.Class)
+					ContentType type = worksheetReader.CheckContentType();
+					switch (type)
 					{
-						c = worksheetReader.ReadClass();
-						//push to db
-					}
-					if (worksheetReader.CheckContentType() == Models.ContentType.Account)
-					{
-						account = worksheetReader.ReadAccount();
-						if (account != null)
-						{
-							//push to db
-						}
-					}
+						case ContentType.Empty:
+							break;
+						case ContentType.Class:
+                            c = worksheetReader.ReadClass();
+
+                            await classRepo.CreateAsync(
+                                new ClassDto
+                                {
+                                    Id = c.Id,
+                                    SheetId = sheet.Id,
+                                    ClassName = c.ClassName,
+                                });
+							break;
+						case ContentType.Account:
+                            account = worksheetReader.ReadAccount();
+                            if (account != null)
+                            {
+                                await accountRepo.CreateAsync(
+                                    new AccountDto
+                                    {
+                                        Id = account.Id,
+                                        ClassId = c.Id,
+                                        IncomingBalanceAssets = account.IncomingBalanceAssets,
+                                        IncomingBalanceLiabilities = account.IncomingBalanceLiabilities,
+                                        Debit = account.Debit,
+                                        Credit = account.Credit
+                                    });
+                            }
+							break;
+						default:
+							break;
+                    }
+
 				}
                 worksheetReader.Close();
                 return Ok($"File uploaded successfully: {model.File.FileName}, {await worksheetReader.GetWorksheetNameAsync()}");

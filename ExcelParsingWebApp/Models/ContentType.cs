@@ -3,5 +3,6 @@
 public enum ContentType
 {
     Class,
-    Account
+    Account,
+    Empty
 }
