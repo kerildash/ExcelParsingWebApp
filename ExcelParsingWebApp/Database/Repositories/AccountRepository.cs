@@ -5,7 +5,7 @@ namespace ExcelParsingWebApp.Database.Repositories;
 
 public class AccountRepository(AppDbContext context)
 {
-    public async Task<ICollection<AccountDto>> GetByClassIdAsync(Guid classId)
+    public async Task<List<AccountDto>> GetByClassIdAsync(Guid classId)
     {
         if (!await context.Classes.AnyAsync(c => c.Id == classId))
         {

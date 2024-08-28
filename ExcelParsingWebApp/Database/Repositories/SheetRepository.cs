@@ -14,7 +14,7 @@ public class SheetRepository(AppDbContext context)
         }
         return await context.Sheets.FirstAsync(sh => sh.Id == Id);
     }
-    public async Task<ICollection<SheetDto>> GetAllAsync(Guid Id)
+    public async Task<List<SheetDto>> GetAllAsync()
     {
         
         return await context.Sheets.ToListAsync();
