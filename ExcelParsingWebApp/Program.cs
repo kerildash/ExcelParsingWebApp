@@ -18,8 +18,9 @@ namespace ExcelParsingWebApp
             // Add services to the container.
             builder.Services.AddScoped<IWorksheetReader, WorksheetReader>();
             builder.Services.AddScoped<IFileService, FileService>();
+			builder.Services.AddScoped<RowCalculatingService>();
 
-            builder.Services.AddScoped<AccountRepository>();
+			builder.Services.AddScoped<AccountRepository>();
             builder.Services.AddScoped<ClassRepository>();
             builder.Services.AddScoped<SheetRepository>();
 			builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());

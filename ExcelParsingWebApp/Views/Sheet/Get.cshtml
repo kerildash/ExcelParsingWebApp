@@ -49,9 +49,22 @@
 
 				@foreach (var account in c.Accounts)
 				{
+					string idInfo;
+					switch (account.Id)
+					{
+						case 999:
+							idInfo = "ПО КЛАССУ";
+							break;
+						case 0:
+							idInfo = "ИТОГО";
+							break;
+						default:
+							idInfo = account.Id.ToString();
+							break;
+					}
 					string[] values =
 					[
-						account.Id.ToString(),
+						idInfo,
 						account.IncomingBalanceAssets.ToString("N2"),
 						account.IncomingBalanceLiabilities.ToString("N2"),
 						account.Debit.ToString("N2"),

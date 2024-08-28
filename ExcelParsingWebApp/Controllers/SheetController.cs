@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ExcelParsingWebApp.Services;
 using ExcelParsingWebApp.Database.Repositories;
 using ExcelParsingWebApp.Models.Domain;
 using ExcelParsingWebApp.Models.Database;
@@ -7,7 +8,7 @@ using ExcelParsingWebApp.Models.ViewModels;
 
 namespace ExcelParsingWebApp.Controllers;
 
-public class SheetController(SheetRepository repository, IMapper mapper) : Controller
+public class SheetController(SheetRepository repository, IMapper mapper, RowCalculatingService service) : Controller
 {
 	[HttpGet]
 	public async Task<IActionResult> Index()
@@ -20,11 +21,8 @@ public class SheetController(SheetRepository repository, IMapper mapper) : Contr
 	{
 		SheetDto dto = await repository.GetAsync(id);
 		SheetViewModel sheet = mapper.Map<SheetViewModel>(dto);
-		foreach (ClassViewModel c in sheet.Classes)
-		{
-			c.Accounts = c.Accounts.OrderBy(a => a.Id).ToList();
-		}
-		sheet.Classes = sheet.Classes.OrderBy(c => c.ClassName).ToList();
+		sheet = service.AddResultingAccounts(sheet);
+		
 		return View(sheet);
 	}
 }
