@@ -3,6 +3,7 @@ using ExcelParsingWebApp.Database.Repositories;
 using ExcelParsingWebApp.Models.Domain;
 using ExcelParsingWebApp.Models.Database;
 using Microsoft.AspNetCore.Mvc;
+using ExcelParsingWebApp.Models.ViewModels;
 
 namespace ExcelParsingWebApp.Controllers;
 
@@ -11,13 +12,19 @@ public class SheetController(SheetRepository repository, IMapper mapper) : Contr
 	[HttpGet]
 	public async Task<IActionResult> Index()
 	{
-		List<SheetDto> sheetsDto = await repository.GetAllAsync();
-		List<Sheet> sheets = mapper.Map<List<Sheet>>(sheetsDto);
-		return View(model: sheets, viewName: "Index");
+		List<Sheet> sheets = mapper.Map<List<Sheet>>(await repository.GetAllAsync());
+		return View(model: sheets);
 	}
-	[HttpGet("sheets/{id}")]
-	public IActionResult Get(Guid id)
+	[HttpGet]
+	public async Task<IActionResult> Get([FromQuery]Guid id)
 	{
-		return Ok(id.ToString());//View();
+		SheetDto dto = await repository.GetAsync(id);
+		SheetViewModel sheet = mapper.Map<SheetViewModel>(dto);
+		foreach (ClassViewModel c in sheet.Classes)
+		{
+			c.Accounts = c.Accounts.OrderBy(a => a.Id).ToList();
+		}
+		sheet.Classes = sheet.Classes.OrderBy(c => c.ClassName).ToList();
+		return View(sheet);
 	}
 }

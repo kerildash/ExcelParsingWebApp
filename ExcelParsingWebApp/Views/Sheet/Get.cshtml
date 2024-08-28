@@ -1,5 +1,59 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using ExcelParsingWebApp.Models.ViewModels;
+@model SheetViewModel;
+
 @{
 }
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+<div class="table-container">
+	<table class="table">
+		<thead>
+			<tr>
+				<th class="td-empty" style="border-bottom:none;"></th>
+				<th colspan="2">ВХОДЯЩЕЕ САЛЬДО</th>
+				<th colspan="2">ОБОРОТЫ</th>
+				<th class="td-right" colspan="2">ИСХОДЯЩЕЕ САЛЬДО</th>
+			</tr>
+			<tr>
+				<th class="td-left" style="border-top:none;">Б/сч</th>
+				<th>Актив</th>
+				<th>Пассив</th>
+				<th>Дебет</th>
+				<th>Кредит</th>
+				<th>Актив</th>
+				<th class="td-right">Пассив</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var c in Model.Classes)
+			{
+				<tr>
+					<td class="td-important" colspan="7">@Html.DisplayFor(modelItem => c.ClassName)</td>
+				</tr>
+
+				@foreach (var account in c.Accounts)
+				{
+					string[] values =
+					[
+						account.Id.ToString(),
+						account.IncomingBalanceAssets.ToString("N2"),
+						account.IncomingBalanceLiabilities.ToString("N2"),
+						account.Debit.ToString("N2"),
+						account.Credit.ToString("N2"),
+						account.OutgoingBalanceAssets.ToString("N2"),
+						account.OutgoingBalanceLiabilities.ToString("N2")
+					];
+					<tr>
+						<td class="td-left">@Html.DisplayFor(modelItem => values[0])</td>
+						<td>@Html.DisplayFor(modelItem => values[1])</td>
+						<td>@Html.DisplayFor(modelItem => values[2])</td>
+						<td>@Html.DisplayFor(modelItem => values[3])</td>
+						<td>@Html.DisplayFor(modelItem => values[4])</td>
+						<td>@Html.DisplayFor(modelItem => values[5])</td>
+						<td class="td-right">@Html.DisplayFor(modelItem => values[6])</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+</div>
