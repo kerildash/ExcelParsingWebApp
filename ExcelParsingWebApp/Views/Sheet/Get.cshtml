@@ -6,6 +6,22 @@
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 <div class="table-container">
+	
+	<div class="table-header">
+		<div class="l-r-container">
+			<span class="left">@Html.DisplayFor(modelItem => Model.BankName)</span>
+		</div>
+
+		<h1>@Html.DisplayFor(modelItem => Model.SheetTitle)</h1>
+		<h2>@Html.DisplayFor(modelItem => Model.PeriodInfo)</h2>
+		<h2>@Html.DisplayFor(modelItem => Model.AdditionalInfo)</h2>
+
+		<p></p>
+		<div class="l-r-container">
+			<span class="left">@Html.DisplayFor(modelItem => Model.Date)</span>
+			<span class="right">@Html.DisplayFor(modelItem => Model.Currency)</span>
+		</div>
+	</div>
 	<table class="table">
 		<thead>
 			<tr>
