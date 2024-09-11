@@ -1,6 +1,6 @@
 # ExcelParsingWebApp
 
-An ASP.NET MVC Web application to work with Excel documents of proper format (example of document [Пример оборотно-сальдовой ведомости.xls](https://github.com/user-attachments/files/16966728/-.xls)).
+An ASP.NET MVC Web application to work with Excel documents of proper format (example of document: https://docs.google.com/spreadsheets/d/1xCJILPm6HjkCVmvfaR2-3VXNK7yOs5Y4/edit?usp=sharing&ouid=113268685917474802428&rtpof=true&sd=true).
 The app allows to upload documents to an sql database and to view the documents and its content in a like in a document way.
 Screecast with the example of using the app: https://drive.google.com/file/d/1zPCT9chiLqilAiez90GtMb-LrK2_LDvv/view?usp=sharing
 
